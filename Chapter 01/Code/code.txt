@@ -1,0 +1,137 @@
+# Problem Statement 1 describing common pitfalls in JavaScript - Page 4 and Page 12
+var counter = 0;
+	
+function incrementCounter() {
+    counter++;
+}
+	
+function logCounter() {
+    console.log(counter);
+}
+	
+incrementCounter();
+logCounter();
+
+
+# Problem Statement 2 describing common pitfalls in JavaScript - Page 4 and Page 13
+getData(function(response1) {
+    getMoreData(response1, function(response2) {
+        getEvenMoreData(response2, function(response3) {
+            // ...and so on
+        });
+    });
+});
+
+
+# Problem Statement 3 describing common pitfalls in JavaScript - Page 5 and Page 14
+function createUser(name, age) {
+    return {
+        name: name,
+        age: age,
+        greet: function() {
+            return `Hello, my name is ${this.name} and I am ${this.age} years old.`;
+        }
+    };
+}
+
+const user1 = createUser('Alice', 25);
+const user2 = createUser('Bob', 30);
+
+
+# Problem Statement 4 describing common pitfalls in JavaScript - Page 5 and Page 15
+const user = {
+    name: 'John',
+    age: 30,
+};
+	
+function updateUser(newUser) {
+    Object.assign(user, newUser);
+}
+	
+updateUser({ age: 31 });
+console.log(user);
+
+
+# Problem Statement 5 describing common pitfalls in JavaScript - Page 6 and Page 16
+function divide(a, b) {
+    return a / b;
+}
+	
+try {
+    const result = divide(10, 0);
+    console.log(result);
+} catch (error) {
+    console.error('Error:', error.message);
+}
+
+
+# Solution to Problem Statement 1 describing common pitfalls in JavaScript - Page 13
+var CounterModule = (function() {
+    var counter = 0; // Encapsulated variable
+
+    function incrementCounter() {
+        counter++;
+    }
+
+    function logCounter() {
+        console.log(counter);
+    }
+
+    return {
+        increment: incrementCounter,
+        log: logCounter
+    };
+})();
+
+CounterModule.increment();
+CounterModule.log();
+
+
+# Solution to Problem Statement 2 describing common pitfalls in JavaScript - Page 13
+getData()
+    .then(response1 => getMoreData(response1))
+    .then(response2 => getEvenMoreData(response2))
+    .then(response3 => {
+        // ...and so on
+    })
+    .catch(error => {
+        // Handle errors
+    });
+
+
+# Solution to Problem Statement 3 describing common pitfalls in JavaScript - Page 14
+// Constructor function for creating objects
+function User(name, age) {
+    this.name = name;
+    this.age = age;
+}
+
+User.prototype.greet = function() {
+    return `Hello, my name is ${this.name} and I am ${this.age} years old.`;
+};
+
+const user1 = new User('Alice', 25);
+const user2 = new User('Bob', 30);
+
+
+# Solution to Problem Statement 4 describing common pitfalls in JavaScript - Page 15
+// Using Object.assign to create a new object (shallow copy)
+const updatedUser = Object.assign({}, user, { age: 31 });
+console.log(updatedUser); // Output: { name: 'John', age: 31 }
+
+
+# Solution to Problem Statement 5 describing common pitfalls in JavaScript - Page 16
+// Improved error handling with Try-Catch
+function divide(a, b) {
+    if (b === 0) {
+        throw new Error('Division by zero is not allowed.');
+    }
+    return a / b;
+}
+
+try {
+    const result = divide(10, 0);
+    console.log(result); // This line will not execute due to the caught error
+} catch (error) {
+    console.error('Error:', error.message);
+}
